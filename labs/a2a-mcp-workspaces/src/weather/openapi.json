@@ -1,0 +1,98 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Weather API",
+        "description": "Team-owned Weather API (managed in the Weather workspace). Returns the current weather for a given city.",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://replace-me.local/weather"
+        }
+    ],
+    "paths": {
+        "/current": {
+            "get": {
+                "summary": "Get current weather for a city",
+                "description": "Retrieves the current weather, including temperature and conditions, for the specified city.",
+                "operationId": "get-weather",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "description": "Name of the city to retrieve the current weather for.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Lisbon"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Current weather for the specified city",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CityWeather"
+                                },
+                                "examples": {
+                                    "Lisbon": {
+                                        "summary": "Example response for Lisbon",
+                                        "value": {
+                                            "city": "Lisbon",
+                                            "temperature": 21.4,
+                                            "temperature_format": "Celsius",
+                                            "description": "Clear skies",
+                                            "humidity": 55,
+                                            "wind_speed": 4.2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CityWeather": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string",
+                        "example": "Lisbon"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 21.4
+                    },
+                    "temperature_format": {
+                        "type": "string",
+                        "example": "Celsius"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Clear skies"
+                    },
+                    "humidity": {
+                        "type": "number",
+                        "format": "int32",
+                        "example": 55
+                    },
+                    "wind_speed": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 4.2
+                    }
+                }
+            }
+        }
+    }
+}

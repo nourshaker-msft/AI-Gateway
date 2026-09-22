@@ -1,0 +1,21 @@
+<!--
+    Weather API policy (Weather workspace).
+    This team-owned API forwards requests to the skeleton Weather backend
+    hosted on Azure Container Apps. The {backend-url} placeholder is replaced
+    at deployment time in main.bicep with the Weather container app URL.
+-->
+<policies>
+    <inbound>
+        <base />
+        <set-backend-service base-url="{backend-url}" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>

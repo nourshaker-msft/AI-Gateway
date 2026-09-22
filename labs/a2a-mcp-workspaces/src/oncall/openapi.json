@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OnCall API",
+        "description": "Team-owned OnCall API (managed in the OnCall workspace). Returns the current on-call engineer for a given team.",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://replace-me.local/oncall"
+        }
+    ],
+    "paths": {
+        "/status": {
+            "get": {
+                "summary": "Get the current on-call engineer for a team",
+                "description": "Retrieves the current on-call engineer, contact details and escalation policy for the specified team.",
+                "operationId": "get-oncall",
+                "parameters": [
+                    {
+                        "name": "team",
+                        "in": "query",
+                        "description": "Name of the team to retrieve the on-call rotation for (e.g. platform, payments, network).",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "platform"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Current on-call information for the specified team",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OnCall"
+                                },
+                                "examples": {
+                                    "platform": {
+                                        "summary": "Example response for the platform team",
+                                        "value": {
+                                            "team": "platform",
+                                            "engineer": "Robin Diaz",
+                                            "phone": "+1-555-0142",
+                                            "severity_level": "P1",
+                                            "escalation_policy": "Escalate to team lead after 15 minutes",
+                                            "on_call_since": "2026-07-01T08:00:00Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "OnCall": {
+                "type": "object",
+                "properties": {
+                    "team": {
+                        "type": "string",
+                        "example": "platform"
+                    },
+                    "engineer": {
+                        "type": "string",
+                        "example": "Robin Diaz"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+1-555-0142"
+                    },
+                    "severity_level": {
+                        "type": "string",
+                        "example": "P1"
+                    },
+                    "escalation_policy": {
+                        "type": "string",
+                        "example": "Escalate to team lead after 15 minutes"
+                    },
+                    "on_call_since": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-07-01T08:00:00Z"
+                    }
+                }
+            }
+        }
+    }
+}

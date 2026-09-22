@@ -1,0 +1,37 @@
+<!--
+    Weather MCP server policy (service level).
+    Do not read the response body in MCP server policies - it interferes with
+    the streaming behavior required by MCP servers.
+-->
+<policies>
+    <inbound>
+        <base />
+        <trace source="Weather MCP" severity="information">
+            <message>Weather MCP server request</message>
+            <metadata name="agent-id" value="@(context.Request.Headers.GetValueOrDefault("agent-id", "n/a"))" />
+        </trace>
+        <cors allow-credentials="false">
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+            <expose-headers>
+                <header>*</header>
+            </expose-headers>
+        </cors>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
